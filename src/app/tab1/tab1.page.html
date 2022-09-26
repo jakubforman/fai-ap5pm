@@ -13,5 +13,25 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+
+  <!-- card component with weather from API -->
+  <ion-card *ngIf="weather$ | async; let weather">
+    <!-- card show only if data (observable) downloaded from server | async in if -->
+    <!-- let weather = data injected from if async state -->
+    <ion-card-header>
+      <ion-card-subtitle>Počasí pro</ion-card-subtitle>
+      <!-- show data -->
+      <ion-card-title>{{weather.name}}</ion-card-title>
+    </ion-card-header>
+
+    <!-- set to no-padding for consistent UI/UX -->
+    <ion-card-content class="ion-no-padding">
+      <!-- show data -->
+      <ion-list>
+        <ion-item>Clouds: {{weather.clouds.all}}</ion-item>
+        <ion-item>Description: {{weather.weather[0].description}}</ion-item>
+        <ion-item>Lat: {{weather.coord.lat}}, long: {{weather.coord.lon}}</ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
