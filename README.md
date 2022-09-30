@@ -24,6 +24,7 @@ Projekt pro výuku mobilních aplikací na Univerzitě Tomáše Bati (Fakulta ap
 1. Naklonujte si REPO (`branch`, kterou potřebujete)
 2. Otevřte projekt ve vámi zvoleném IDE a v příkazovém rádku
 3. Nainstalujte všechny NPM knihovny - `npm install`
-4. Spusťte Ionic dev server pomocí `ionic serve`
+4. Nastavit svůj API klíč pro [Open Weather Map](https://openweathermap.org) v [src/environments/environment.ts](src/environments/environment.ts)
+5. Spusťte Ionic dev server pomocí `ionic serve`
 
 
