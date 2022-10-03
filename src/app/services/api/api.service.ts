@@ -2,27 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-
-export interface WeatherCoord{
-  lon: number;
-  lat: number;
-}
-
-export interface Weather {
-  id: number;
-  name: string;
-  cod: number;
-  base: string;
-  weather: { description: string }[];
-  clouds: {
-    all: number;
-  };
-  coord: WeatherCoord;
-  visibility: string;
-  rain?: {
-    [type: string]: number;
-  };
-}
+import {Weather} from '../../models/weather.model';
 
 @Injectable({
   providedIn: 'root'
