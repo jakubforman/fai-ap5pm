@@ -11,6 +11,7 @@ export class Tab1Page {
 
   // custom observable property
   weather$: Observable<Weather>;
+  weathers$: Observable<Weather>[] = [];
 
   constructor(
     // get custom Service from DI
@@ -19,6 +20,8 @@ export class Tab1Page {
     // set property (GEO Zlín - Tečovice)
     this.weather$ = this.apiService.getWeather(49.2310213, 17.6064677);
 
+    this.weathers$.push(this.apiService.getWeather(49.2310213, 17.6064677));
+    this.weathers$.push(this.apiService.getWeather(35.6735408, 139.5703032));
     // other way
     /*this.apiService.getWeather(49.2310213, 17.6064677).subscribe(data => {
       this.weather = data // need modified implementation in view
