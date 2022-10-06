@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nastavení</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Zavřít
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Set as form group -->
+  <ion-list [formGroup]="form">
+    <!-- Loop places -->
+    <ion-item *ngFor="let place of places; let i = index">
+      <!-- Set value with formControlName used in formGroup (controller) -->
+      <ion-checkbox slot="start" [value]="i" formControlName="ch{{i + 1}}"></ion-checkbox>
+      <!-- Set place name for orientation -->
+      <ion-label>{{place.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
