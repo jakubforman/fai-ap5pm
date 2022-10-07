@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
-import {ApiService, Weather} from '../services/api/api.service';
+import {ApiService} from '../services/api/api.service';
 import {Observable} from 'rxjs';
+import {Weather} from '../models/weather.model';
+import {ModalController} from '@ionic/angular';
+import {SettingsPage} from '../pages/settings/settings.page';
 
 @Component({
   selector: 'app-tab1',
@@ -9,19 +12,49 @@ import {Observable} from 'rxjs';
 })
 export class Tab1Page {
 
-  // custom observable property
-  weather$: Observable<Weather>;
+  /**
+   * Custom observable array
+   */
+  weather$: Observable<Weather>[] = [];
 
   constructor(
     // get custom Service from DI
-    private apiService: ApiService
+    private apiService: ApiService,
+    private modalCtrl: ModalController
   ) {
-// set property (GEO Zlín - Tečovice)
-    this.weather$ = this.apiService.getWeather(49.2310213, 17.6064677);
+    // set property (GEO Zlín - Tečovice)
+    this.weather$.push(this.apiService.getWeather(49.2310213, 17.6064677));
+    // push (GEO Brno)
+    this.weather$.push(this.apiService.getWeather(49.2020489, 16.5079213));
 
     // other way
     /*this.apiService.getWeather(49.2310213, 17.6064677).subscribe(data => {
       this.weather = data // need modified implementation in view
     });*/
   }
+
+  /**
+   * Click event
+   */
+  openSettings() {
+    this.openModal();
+  }
+
+  /**
+   * Open Ionic modal
+   */
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: SettingsPage,
+    });
+    await modal.present();
+
+    /*
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.message = `Hello, ${data}!`;
+    }*/
+  }
+
 }

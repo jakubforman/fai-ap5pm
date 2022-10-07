@@ -1,33 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs";
-
-export interface WeatherCoord {
-  lat: number;
-  lon: number;
-}
-
-export interface WW {
-  description: string;
-}
-
-export interface Weather {
-  id: number;
-  name: string;
-  coord: WeatherCoord;
-  wind: {
-    speed: number;
-    deg: number;
-    gust: number;
-  };
-  rain?: {
-    // '1h': number;
-    [key: string]: number;
-  };
-  weather: WW[];
-  // weather: [WW];
-}
+import {Observable} from 'rxjs';
+import {Weather} from '../../models/weather.model';
 
 @Injectable({
   providedIn: 'root'
