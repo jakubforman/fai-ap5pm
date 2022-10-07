@@ -2,26 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-
-export interface WW {
- description: string;
-}
-export interface WeatherCoord {
-  lat: number;
-  lon: number;
-}
-
-export interface Weather {
-  id: number;
-  name: string;
-  coord: WeatherCoord;
-  weather: WW[];
-  // weather: [WW, string, number];
-  rain?: {
-    // '1h': number;
-    [key: string]: number;
-  };
-}
+import {Weather} from '../../../models/weather.model';
 
 @Injectable({
   providedIn: 'root'
