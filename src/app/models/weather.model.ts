@@ -43,8 +43,8 @@ export interface Weather {
   coord: WCoord;
   visibility: string;
   sys?: {
-    type: number;
-    id: number;
+    type?: number;
+    id?: number;
     country: string;
     sunrise: number;
     sunset: number;

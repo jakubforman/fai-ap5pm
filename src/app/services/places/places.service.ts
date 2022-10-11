@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Weather} from '../../models/weather.model';
 
 export interface Place {
   latitude: number;
@@ -18,6 +19,32 @@ export class PlacesService {
           <option value="lat=31.2243085&lon=120.9162955">Shanghai, China</option>
           <option value="lat=35.6735408&lon=139.5703032">Tokyo, Japan</option>
    */
+
+  detail: Weather = {
+    visibility: '',
+    coord: {lon: 28.6473, lat: 28.6473},
+    weather: [{id: 800, main: 'Clear', description: 'clear sky', icon: '01d'}],
+    base: 'stations',
+    main: {
+      temp: 26.99,
+      feels_like: 26.58,
+      temp_min: 26.99,
+      temp_max: 26.99,
+      pressure: 1017,
+      humidity: 34,
+      sea_level: 1017,
+      grnd_level: 995
+    },
+    // visibility: 10000,
+    wind: {speed: 5.18, deg: 356, gust: 5.4},
+    clouds: {all: 0},
+    dt: 1665410028,
+    sys: {country: 'EG', sunrise: 1665374579, sunset: 1665416500},
+    timezone: 7200,
+    id: 361394,
+    name: 'Al Bawīţī',
+    cod: 200
+  };
 
   /**
    * Hold all places

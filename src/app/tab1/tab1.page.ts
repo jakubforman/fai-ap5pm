@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Weather} from '../models/weather.model';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {ModalController} from '@ionic/angular';
+import {PlacesService} from '../services/places/places.service';
 
 @Component({
   selector: 'app-tab1',
@@ -20,12 +21,16 @@ export class Tab1Page {
   constructor(
     // get custom Service from DI
     private apiService: ApiService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private placesService: PlacesService
   ) {
-    // push (GEO Zlín - Tečovice)
-    this.weather$.push(this.apiService.getWeather(49.2310213, 17.6064677));
-    // push (GEO Brno - Tečovice)
-    this.weather$.push(this.apiService.getWeather(49.2020489, 16.5079213));
+    // TODO: async subscribe for change register
+    // TODO: remove all from array before each (push() issue) in subscribe
+    this.placesService.places.forEach(place => {
+      if (place.homepage) {
+        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+      }
+    });
   }
 
   /**
@@ -47,11 +52,18 @@ export class Tab1Page {
     await modal.present();
 
     // On will dismiss event
+    // TODO: on will dismiss reload data
     /*
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
       this.message = `Hello, ${data}!`;
     }*/
+  }
+
+  openDetail(weather: Weather) {
+    // push data to service
+    this.placesService.detail = weather;
+    // open route in attr routeLink
   }
 }
