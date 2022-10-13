@@ -41,10 +41,10 @@ export interface Weather {
   wind: WWind;
   clouds: WClouds;
   coord: WCoord;
-  visibility: string;
+  visibility: number;
   sys?: {
-    type: number;
-    id: number;
+    type?: number;
+    id?: number;
     country: string;
     sunrise: number;
     sunset: number;

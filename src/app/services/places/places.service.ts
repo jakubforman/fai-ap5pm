@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Weather} from '../../models/weather.model';
 
 export interface Place {
   latitude: number;
@@ -12,6 +13,30 @@ export interface Place {
 })
 export class PlacesService {
 
+  public detail: Weather = {
+    coord: {lon: 28.6473, lat: 28.6473},
+    weather: [{id: 800, main: 'Clear', description: 'clear sky', icon: '01d'}],
+    base: 'stations',
+    main: {
+      temp: 21.57,
+      feels_like: 21.4,
+      temp_min: 21.57,
+      temp_max: 21.57,
+      pressure: 1019,
+      humidity: 62,
+      sea_level: 1019,
+      grnd_level: 996
+    },
+    visibility: 10000,
+    wind: {speed: 4.04, deg: 357, gust: 5.51},
+    clouds: {all: 0},
+    dt: 1665644486,
+    sys: {country: 'EG', sunrise: 1665633882, sunset: 1665675503},
+    timezone: 7200,
+    id: 361394,
+    name: 'Al Bawīţī',
+    cod: 200
+  };
 
   /*
           <option value="lat=-64.8251018&lon=-63.496847">Port Lockroy, Antarctica</option>

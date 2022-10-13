@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Weather} from '../models/weather.model';
 import {ModalController} from '@ionic/angular';
 import {SettingsPage} from '../pages/settings/settings.page';
+import {PlacesService} from '../services/places/places.service';
 
 @Component({
   selector: 'app-tab1',
@@ -20,12 +21,10 @@ export class Tab1Page {
   constructor(
     // get custom Service from DI
     private apiService: ApiService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private placesService: PlacesService
   ) {
-    // set property (GEO Zlín - Tečovice)
-    this.weather$.push(this.apiService.getWeather(49.2310213, 17.6064677));
-    // push (GEO Brno)
-    this.weather$.push(this.apiService.getWeather(49.2020489, 16.5079213));
+    this.initWeather();
   }
 
   /**
@@ -45,10 +44,31 @@ export class Tab1Page {
 
     await modal.present();
 
-    /* const {data, role} = await modal.onWillDismiss();
-    if (role === 'confirm') {
-      this.message = `Hello, ${data}!`;
-    }*/
+    await modal.onWillDismiss(); // wait for dismiss
+    // re-init weather
+    this.initWeather();
   }
 
+  openDetail(weather: Weather) {
+    // set weather detail
+    this.placesService.detail = weather;
+  }
+
+
+  /**
+   * Init weather for homepage cards
+   *
+   * @private
+   */
+  private initWeather() {
+    // reset array
+    this.weather$ = [];
+
+    // loop all places
+    this.placesService.places.forEach(place => {
+      if (place.homepage) {
+        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+      }
+    });
+  }
 }
