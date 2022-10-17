@@ -24,13 +24,7 @@ export class Tab1Page {
     private modalCtrl: ModalController,
     private placesService: PlacesService
   ) {
-    // TODO: async subscribe for change register
-    // TODO: remove all from array before each (push() issue) in subscribe
-    this.placesService.places.forEach(place => {
-      if (place.homepage) {
-        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
-      }
-    });
+    this.initWeather();
   }
 
   /**
@@ -51,20 +45,23 @@ export class Tab1Page {
 
     await modal.present();
 
-    // On will dismiss event
-    // TODO: on will dismiss reload data
-    /*
-    const { data, role } = await modal.onWillDismiss();
+    await modal.onWillDismiss();
 
-    // other way
-    /*this.apiService.getWeather(49.2310213, 17.6064677).subscribe(data => {
-      this.weather = data // need modified implementation in view
-    });*/
+    this.initWeather();
   }
 
   openDetail(weather: Weather) {
     // push data to service
     this.placesService.detail = weather;
     // open route in attr routeLink
+  }
+
+  private initWeather() {
+    this.weather$ = [];
+    this.placesService.places.forEach(place => {
+      if (place.homepage) {
+        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+      }
+    });
   }
 }
