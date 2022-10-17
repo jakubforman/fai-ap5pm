@@ -3,6 +3,11 @@
     <ion-title>
       Tab 1
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSettings()">
+        <ion-icon slot="icon-only" name="cog-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -14,31 +19,47 @@
   </ion-header>
 
 
-  <!-- card component with weather from API -->
-  <ng-container *ngFor="let weather$ of weathers$">
-    <ion-card *ngIf="weather$ | async; let weather"> <!-- TODO: Open detail page -->
+  <!-- Loop of observable array -->
+  <ng-container *ngFor="let item$ of weather$">
+    <!-- card component with weather from API, open detail actions -->
+    <ion-card *ngIf="item$ | async; let weather" routerLink="/detail" (click)="openDetail(weather)">
       <!-- card show only if data (observable) downloaded from server | async in if -->
       <!-- let weather = data injected from if async state -->
       <ion-card-header>
         <ion-card-subtitle>Počasí pro</ion-card-subtitle>
         <!-- show data -->
-        <ion-card-title>{{weather.name}}</ion-card-title>
+        <ion-card-title>
+          <ion-row class="ion-no-padding ion-align-items-center">
+            <ion-col class="ion-no-padding">
+              {{weather.name}}
+            </ion-col>
+            <ion-col class="ion-no-padding ion-text-right">
+              <ion-chip>
+                <ion-label>Actual: {{weather.main.temp}} ℃</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+        </ion-card-title>
       </ion-card-header>
 
       <!-- set to no-padding for consistent UI/UX -->
-      <ion-card-content class="ion-no-padding">
+      <ion-card-content>
         <!-- show data -->
-        <ion-list>
-          <!-- Available in https://openweathermap.org/weather-conditions -->
-          <ion-item><img [src]="'http://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'" alt="">
-          </ion-item>
-          <ion-item>Clouds: {{weather.clouds.all}}</ion-item>
-          <ion-item>Description: {{weather.weather[0].description}}</ion-item>
-          <ion-item>Lat: {{weather.coord.lat}}, long: {{weather.coord.lon}}</ion-item>
-        </ion-list>
+        <ion-row class="ion-no-padding">
+          <ion-col>
+            <img [alt]="weather.weather[0].description" [title]="weather.weather[0].description"
+                 [src]="'http://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'">
+          </ion-col>
+          <ion-col class="ion-no-padding ion-text-right">
+            <ion-chip color="primary">
+              <ion-label>Min: {{weather.main.temp_min}} ℃</ion-label>
+            </ion-chip>
+            <ion-chip color="danger">
+              <ion-label>Max: {{weather.main.temp_max}} ℃</ion-label>
+            </ion-chip>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </ng-container>
-
-  <!-- TODO: modal windows for select -->
 </ion-content>
