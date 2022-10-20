@@ -24,6 +24,22 @@ Projekt pro výuku mobilních aplikací na Univerzitě Tomáše Bati (Fakulta ap
 1. Naklonujte si REPO (`branch`, kterou potřebujete)
 2. Otevřte projekt ve vámi zvoleném IDE a v příkazovém rádku
 3. Nainstalujte všechny NPM knihovny - `npm install`
-4. Nastavit svůj API klíč pro [Open Weather Map](https://openweathermap.org) v [src/environments/environment.ts](src/environments/environment.ts)
-5. Spusťte Ionic dev server pomocí `ionic serve`
+4. Nastavit svůj API klíč pro [Open Weather Map](https://openweathermap.org) v [src/environments/environment.ts](src/environments/environment.ts) a  [src/environments/environment.prod.ts](src/environments/environment.prod.ts).
+5. (* pokud půjde update na Firebase) Upravit ID aplikace pro firebase v [src/.firebaserc](src/.firebaserc)
+6. Spusťte Ionic dev server pomocí `ionic serve`
 
+
+## Firebase
+
+Ofciální dokumentace [Angular/pwa - Ionic](https://ionicframework.com/docs/angular/pwa)
+
+### Login Init
+
+1. npm install -g firebase-tools - nainstaluje firebase do počítače
+2. firebase login - přihlásí uživatele
+3. firebase init - init projektu pro firebase
+
+### Upload
+
+1. ionic build --prod - build produkční verze
+2. firebase deploy - upload produkční (poslední build verze) ze složky www na server firebase
