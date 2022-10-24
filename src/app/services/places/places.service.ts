@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Weather} from '../../models/weather.model';
+import {StorageService} from '../storage/storage.service';
+import {ReplaySubject} from 'rxjs';
 
 export interface Place {
   latitude: number;
@@ -90,11 +92,29 @@ export class PlacesService {
     }
   ];
 
-  constructor() {
+  /**
+   * Hold places
+   *
+   * @private
+   */
+  private privatePlacesSubject = new ReplaySubject<Place[]>(1);
+
+  constructor(
+    private storageService: StorageService
+  ) {
+    this.storageService.getData('places').then(places => {
+      this.privatePlacesSubject.next(places);
+    });
+  }
+
+  get places$() {
+    return this.privatePlacesSubject.asObservable();
   }
 
   /**
    * Get all places
+   *
+   * @deprecated Use places$
    */
   get places(): Place[] {
     return this.privatePlaces;
@@ -106,8 +126,10 @@ export class PlacesService {
    * @param index
    * @param active
    */
-  setHome(index: number, active: boolean) {
+  async setHome(index: number, active: boolean) {
     this.privatePlaces[index].homepage = active;
+    this.privatePlacesSubject.next(this.privatePlaces);
+    await this.storageService.saveData('places', this.privatePlaces);
   }
 
 }

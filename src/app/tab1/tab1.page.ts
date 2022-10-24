@@ -24,8 +24,6 @@ export class Tab1Page {
     private modalCtrl: ModalController,
     private placesService: PlacesService
   ) {
-    // TODO: async subscribe for change register
-    // TODO: remove all from array before each (push() issue) in subscribe
     this.initWeather();
   }
 
@@ -47,9 +45,6 @@ export class Tab1Page {
     });
 
     await modal.present();
-
-    await modal.onWillDismiss();
-    this.initWeather();
   }
 
   openDetail(weather: Weather) {
@@ -59,11 +54,13 @@ export class Tab1Page {
   }
 
   private initWeather() {
-    this.weather$ = [];
-    this.placesService.places.forEach(place => {
-      if (place.homepage) {
-        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
-      }
+    this.placesService.places$.subscribe(data => {
+      this.weather$ = [];
+      data.forEach(place => {
+        if (place.homepage) {
+          this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+        }
+      });
     });
   }
 }

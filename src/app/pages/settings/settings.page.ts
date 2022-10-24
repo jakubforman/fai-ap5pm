@@ -13,7 +13,7 @@ export class SettingsPage implements OnInit {
   /**
    * Hold all available places
    */
-  places: Place[];
+  places: Place[] = [];
 
   /**
    * Reactive from group
@@ -26,17 +26,20 @@ export class SettingsPage implements OnInit {
     private fb: FormBuilder
   ) {
     // set places from service getter
-    this.places = this.placesService.places;
-
-    // create form hardcoded
-    this.form = this.fb.group({
-      ch1: [this.places[0].homepage, []],
-      ch2: [this.places[1].homepage, []],
-      ch3: [this.places[2].homepage, []],
-      ch4: [this.places[3].homepage, []],
-      ch5: [this.places[4].homepage, []],
-      ch6: [this.places[5].homepage, []]
+    this.placesService.places$.subscribe(data=>{
+      this.places = data;
+      // create form hardcoded
+      this.form = this.fb.group({
+        ch1: [this.places[0].homepage, []],
+        ch2: [this.places[1].homepage, []],
+        ch3: [this.places[2].homepage, []],
+        ch4: [this.places[3].homepage, []],
+        ch5: [this.places[4].homepage, []],
+        ch6: [this.places[5].homepage, []]
+      });
     });
+
+
 
     // on form control (value) change
     this.form.valueChanges.subscribe(data => {
