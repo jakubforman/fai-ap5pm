@@ -53,11 +53,13 @@ export class Tab1Page {
   }
 
   private initWeather() {
-    this.weather$ = [];
-    this.placesService.places.forEach(place => {
-      if (place.homepage) {
-        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
-      }
+    this.placesService.places$.subscribe(places => {
+      this.weather$ = [];
+      places.forEach(place => {
+        if (place.homepage) {
+          this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+        }
+      });
     });
   }
 }
