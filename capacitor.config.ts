@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'ap5pm',
+  appName: 'Weather App',
   webDir: 'www',
   bundledWebRuntime: false
 };

@@ -103,6 +103,10 @@ export class PlacesService {
     private storageService: StorageService
   ) {
     this.storageService.getData('places').then(places => {
+      if (!places) {
+        places = this.privatePlaces;
+      }
+
       this.privatePlacesSubject.next(places);
     });
   }

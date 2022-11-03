@@ -31,6 +31,22 @@ Projekt pro výuku mobilních aplikací na Univerzitě Tomáše Bati (Fakulta ap
 5. (* pokud půjde update na Firebase) Upravit ID aplikace pro firebase v [src/.firebaserc](src/.firebaserc)
 6. Spusťte Ionic dev server pomocí `ionic serve`
 
+## Android build
+
+> **První kroky**
+> 
+> Je nutné mít nainstalované androidstudio s validmíni SDK a souhlasy všech licenčních podmínek.
+> 
+> Doporučuji první otevřít nativní projekt v Android studiu a následně spouštět tento 
+> projekt pokud před ním neexistoval žáedný Android projekt. Dojde tak namapování cest 
+> SDK a dalších důležitých částí Android studia.
+> 
+> [Oficiální dokumentace](https://ionicframework.com/docs/developing/android)
+
+1. Spustit `ionic cap sync android --prod` je nutné míst nastavn API klíč v [src/environments/environment.prod.ts](src/environments/environment.prod.ts). 
+2. Otevřít Android studio nebo `ionic open android` (**otevírá se složka [android](android) - kde je android projekt!**)
+3. Spustit na reálném zařízení nebo emulátoru.
+
 ## Firebase
 
 Ofciální dokumentace [Angular/pwa - Ionic](https://ionicframework.com/docs/angular/pwa)
