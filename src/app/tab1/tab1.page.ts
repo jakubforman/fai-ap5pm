@@ -5,6 +5,7 @@ import {Weather} from '../../models/weather.model';
 import {ModalController} from '@ionic/angular';
 import {SettingsPage} from '../pages/settings/settings.page';
 import {PlacesService} from '../services/places/places.service';
+import {StorageService} from '../services/storage/storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -22,11 +23,17 @@ export class Tab1Page {
     // get custom Service from DI
     private apiService: ApiService,
     private modalCtrl: ModalController,
-    private placesService: PlacesService
+    private placesService: PlacesService,
+    private storageService: StorageService
   ) {
     this.initWeather();
   }
 
+  async testStorage() {
+    await this.storageService.saveData('test', {id: 1, content: 'text content'});
+    const data = await this.storageService.getData('test');
+    console.log(data);
+  }
 
   /**
    * Click event
@@ -43,9 +50,6 @@ export class Tab1Page {
       component: SettingsPage,
     });
     modal.present();
-
-    await modal.onWillDismiss();
-    this.initWeather();
   }
 
   openDetail(weather: Weather) {
@@ -54,11 +58,14 @@ export class Tab1Page {
   }
 
   private initWeather() {
-    this.weather$ = [];
-    this.placesService.places.forEach(place => {
-      if (place.homepage) {
-        this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
-      }
+    this.placesService.places$.subscribe(places => {
+      this.weather$ = [];
+
+      places.forEach(place => {
+        if (place.homepage) {
+          this.weather$.push(this.apiService.getWeather(place.latitude, place.longitude));
+        }
+      });
     });
   }
 

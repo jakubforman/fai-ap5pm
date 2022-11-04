@@ -18,6 +18,7 @@
     </ion-toolbar>
   </ion-header>
   
+  <ion-button color="danger" (click)="testStorage()">Test storage</ion-button>
   <!-- Loop of observable array -->
   <ng-container *ngFor="let item$ of weather$">
     <!-- card component with weather from API, open detail actions -->
